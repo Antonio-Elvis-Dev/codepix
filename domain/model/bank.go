@@ -8,9 +8,10 @@ import (
 )
 
 type Banck struct {
-	Base `valid:"required"`
-	Code string `json:"code" valid:"notnull"`
-	Name string `json:"name" valid:"notnull"`
+	Base      `valid:"required"`
+	Code      string      `json:"code" valid:"notnull"`
+	Name      string      `json:"name" valid:"notnull"`
+	Acconunts []*Acconunt `valid:"-"`
 }
 
 func (banck *Banck) isValid() error {
