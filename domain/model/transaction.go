@@ -69,7 +69,6 @@ func NewTransaction(accountForm *Acconunt, amount float64, pixKeyTo *PixKey, des
 	transaction.CreatedAt = time.Now()
 
 	err := transaction.isValid()
-
 	if err != nil {
 		return nil, err
 	}
