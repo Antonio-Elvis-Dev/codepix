@@ -26,12 +26,12 @@ type Transactions struct {
 }
 type Transaction struct {
 	Base              `valid:"required"`
-	AcconuntForm      *Acconunt `valid:"-"`
-	Amount            float64   `josn:"amount" valid:"notnull"`
-	PixKeyTo          *PixKey   `valid:"-"`
-	Status            string    `josn:"status" valid:"notnull"`
-	Description       string    `josn:"description" valid:"notnull"`
-	CancelDescription string    `josn:"cancel_description" valid:"notnull"`
+	AccountForm       *Account `valid:"-"`
+	Amount            float64  `josn:"amount" valid:"notnull"`
+	PixKeyTo          *PixKey  `valid:"-"`
+	Status            string   `josn:"status" valid:"notnull"`
+	Description       string   `josn:"description" valid:"notnull"`
+	CancelDescription string   `josn:"cancel_description" valid:"notnull"`
 }
 
 func (t *Transaction) isValid() error {
@@ -45,7 +45,7 @@ func (t *Transaction) isValid() error {
 		return errors.New("invalid status for the transaction")
 	}
 
-	if t.PixKeyTo.AcconuntID == t.AcconuntForm.ID {
+	if t.PixKeyTo.AccountID == t.AccountForm.ID {
 		return errors.New("the source and destination account cannot be the same")
 	}
 
@@ -56,13 +56,13 @@ func (t *Transaction) isValid() error {
 	return nil
 }
 
-func NewTransaction(accountForm *Acconunt, amount float64, pixKeyTo *PixKey, description string) (*Transaction, error) {
+func NewTransaction(accountForm *Account, amount float64, pixKeyTo *PixKey, description string) (*Transaction, error) {
 	transaction := Transaction{
-		AcconuntForm: accountForm,
-		Amount:       amount,
-		Description:  description,
-		PixKeyTo:     pixKeyTo,
-		Status:       TransactionPending,
+		AccountForm: accountForm,
+		Amount:      amount,
+		Description: description,
+		PixKeyTo:    pixKeyTo,
+		Status:      TransactionPending,
 	}
 
 	transaction.ID = uuid.NewV4().String()

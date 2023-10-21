@@ -9,12 +9,12 @@ import (
 )
 
 type PixKey struct {
-	Base       `valid:"required"`
-	Kind       string    `json:"kind" valid:"notnull"`
-	Key        string    `json:"key"  valid:"notnull"`
-	AcconuntID string    `json:"acconunt_id"  valid:"notnull"`
-	Acconunt   *Acconunt `valid:"-"`
-	Status     string    `json:"status"  valid:"notnull"`
+	Base      `valid:"required"`
+	Kind      string   `json:"kind" valid:"notnull"`
+	Key       string   `json:"key"  valid:"notnull"`
+	AccountID string   `json:"account_id"  valid:"notnull"`
+	Account   *Account `valid:"-"`
+	Status    string   `json:"status"  valid:"notnull"`
 }
 
 func (pixKey *PixKey) isValid() error {
@@ -35,12 +35,12 @@ func (pixKey *PixKey) isValid() error {
 	return nil
 }
 
-func NewPixKey(kind string, account *Acconunt, key string) (*PixKey, error) {
+func NewPixKey(kind string, account *Account, key string) (*PixKey, error) {
 	pixKey := PixKey{
-		Kind:     kind,
-		Key:      key,
-		Acconunt: account,
-		Status:   "active",
+		Kind:    kind,
+		Key:     key,
+		Account: account,
+		Status:  "active",
 	}
 
 	pixKey.ID = uuid.NewV4().String()

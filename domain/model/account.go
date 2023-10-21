@@ -10,20 +10,20 @@ import (
 type PixKeyRepositoryInterface interface {
 	RegisterKey(pixKey *PixKey) (*PixKey, error)
 	FindKeyByKing(key string, kind string) (*PixKey, error)
-	AddBank(bank *Banck) error
-	AddAccount(acconunt *Acconunt) error
-	FindAccount(id string) (*Acconunt, error)
+	AddBank(bank *Bank) error
+	AddAccount(account *Account) error
+	FindAccount(id string) (*Account, error)
 }
 
-type Acconunt struct {
+type Account struct {
 	Base      `valid:"required"`
 	OwnerName string    `json:"owner_name" valid:"notnull"`
-	Bank      *Banck    `valid:"-"`
+	Bank      *Bank     `valid:"-"`
 	Number    string    `json:"number" valid:"notnull"`
 	PixKeys   []*PixKey `valid:"-"`
 }
 
-func (account *Acconunt) isValid() error {
+func (account *Account) isValid() error {
 	_, err := govalidator.ValidateStruct(account)
 	if err != nil {
 		return err
@@ -31,19 +31,19 @@ func (account *Acconunt) isValid() error {
 	return nil
 }
 
-func NewAccount(bank *Banck, number string, ownerName string) (*Acconunt, error) {
-	acconunt := Acconunt{
+func NewAccount(bank *Bank, number string, ownerName string) (*Account, error) {
+	account := Account{
 		OwnerName: ownerName,
 		Bank:      bank,
 		Number:    number,
 	}
 
-	acconunt.ID = uuid.NewV4().String()
-	acconunt.CreatedAt = time.Now()
+	account.ID = uuid.NewV4().String()
+	account.CreatedAt = time.Now()
 
-	err := acconunt.isValid()
+	err := account.isValid()
 	if err != nil {
 		return nil, err
 	}
-	return &acconunt, nil
+	return &account, nil
 }

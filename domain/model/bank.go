@@ -7,34 +7,34 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-type Banck struct {
-	Base      `valid:"required"`
-	Code      string      `json:"code" valid:"notnull"`
-	Name      string      `json:"name" valid:"notnull"`
-	Acconunts []*Acconunt `valid:"-"`
+type Bank struct {
+	Base     `valid:"required"`
+	Code     string     `json:"code" valid:"notnull"`
+	Name     string     `json:"name" valid:"notnull"`
+	Accounts []*Account `valid:"-"`
 }
 
-func (banck *Banck) isValid() error {
+func (bank *Bank) isValid() error {
 
-	_, err := govalidator.ValidateStruct(banck)
+	_, err := govalidator.ValidateStruct(bank)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func NewBanck(code string, name string) (*Banck, error) {
-	banck := Banck{
+func NewBank(code string, name string) (*Bank, error) {
+	bank := Bank{
 		Code: code,
 		Name: name,
 	}
 
-	banck.ID = uuid.NewV4().String()
-	banck.CreatedAt = time.Now()
+	bank.ID = uuid.NewV4().String()
+	bank.CreatedAt = time.Now()
 
-	err := banck.isValid()
+	err := bank.isValid()
 	if err != nil {
 		return nil, err
 	}
-	return &banck, nil
+	return &bank, nil
 }
